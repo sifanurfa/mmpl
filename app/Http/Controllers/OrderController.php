@@ -30,12 +30,16 @@ class OrderController extends Controller
             'order_notes' => 'nullable|string|max:500'
         ]);
 
-        $orderData = new OrderData (
-            $request->user_id,
-            $request->product_name,
-        );
+        Order::create([
+            'user_id' => $request->user_id,
+            'product_name' => $request->product_name,
+            'quantity' => $request->quantity,
+            'total_price' => $request->total_price,
+            'shipping_address' => $request->shipping_address,
+            'payment_method' => $request->payment_method,
+            'order_notes' => $request->order_notes
+        ]);
 
-        $this->createOrder($orderData);
         return redirect()->route('orders.index')->with('success', 'Order created successfully.');    }
 
     public function show(Order $order)
